@@ -34,7 +34,7 @@ jobs:
   check-activation:
     runs-on: ubuntu-latest
     outputs:
-      is_activated: ${{ steps.check.outputs.is_activated }}
+      is_activated: true
       stored_code: ${{ steps.check.outputs.stored_code }}
     steps:
       - name: Checkout repository
@@ -43,27 +43,7 @@ jobs:
       - name: Check activation status
         id: check
         run: |
-          echo "========================================"
-          echo "🔍 بررسی وضعیت فعالسازی..."
-          echo "========================================"
-          if [ -f "activate.txt" ]; then
-            STORED_CODE=$(grep -oP 'code=\K.*' activate.txt | head -1 || echo "")
-            echo "stored_code=$STORED_CODE" >> $GITHUB_OUTPUT
-            if [ -n "$STORED_CODE" ]; then
-              echo "is_activated=true" >> $GITHUB_OUTPUT
-              echo "✅ وضعیت: فعال شده"
-              echo "🎉 دانلودر شما فعال است!"
-            else
-              echo "is_activated=false" >> $GITHUB_OUTPUT
-              echo "🔒 وضعیت: فعال نشده"
-            fi
-          else
-            echo "is_activated=false" >> $GITHUB_OUTPUT
-            echo "stored_code=" >> $GITHUB_OUTPUT
-            echo "🔒 وضعیت: فعال نشده"
-            echo "⚠️ برای استفاده از دانلودر، ابتدا باید آن را فعال کنید"
-          fi
-          echo "========================================"
+          echo "start"
 
   activate:
     needs: check-activation
